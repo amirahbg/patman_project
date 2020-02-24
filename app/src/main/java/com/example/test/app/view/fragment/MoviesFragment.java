@@ -3,15 +3,22 @@ package com.example.test.app.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.test.app.MainApp;
+import com.example.test.app.R;
+import com.example.test.app.data.model.MovieItem;
 import com.example.test.app.databinding.FragmentMoviesBinding;
 import com.example.test.app.di.AppViewModelFactory;
+import com.example.test.app.utils.Resource;
+import com.example.test.app.view.adapter.MovieAdapter;
+import com.example.test.app.view.decorator.GridLayoutDecorator;
 import com.example.test.app.viewmodel.MoviesViewModel;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 
 /**
@@ -31,6 +40,7 @@ public class MoviesFragment extends Fragment {
 
     @Inject
     AppViewModelFactory viewModelFactory;
+    private MovieAdapter movieAdapter;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -60,11 +70,65 @@ public class MoviesFragment extends Fragment {
         if (binding == null) {
             binding = FragmentMoviesBinding.inflate(inflater, container, false);
 
+            setupRecyclerView();
+
             moviesViewModel.getMovieItems().observe(this, moviesItem -> {
-                Log.i(TAG, "onCreateView: " + moviesItem.toString());
+                switch (moviesItem.status) {
+                    case LOADING:
+                        handleLoading(moviesItem);
+                        break;
+
+                    case SUCCESS:
+                        handleSuccess(moviesItem);
+                        break;
+
+                    case ERROR:
+                        handleError(moviesItem);
+                }
             });
         }
 
         return binding.getRoot();
+    }
+
+    private void handleError(Resource<List<MovieItem>> data) {
+        binding.customLoading.showRetry();
+
+        if (data.message == null)
+            Snackbar.make(binding.clContainer, R.string.unknown_error, Snackbar.LENGTH_LONG).show();
+        else
+            Snackbar.make(binding.clContainer, data.message, Snackbar.LENGTH_LONG).show();
+
+        setData(data.data);
+    }
+
+    private void handleSuccess(Resource<List<MovieItem>> data) {
+        binding.customLoading.hide();
+        setData(data.data);
+    }
+
+    private void handleLoading(Resource<List<MovieItem>> data) {
+        binding.customLoading.showLoading();
+        setData(data.data);
+    }
+
+    private void setData(List<MovieItem> data) {
+        if (data != null) {
+            movieAdapter.setData(data);
+        }
+    }
+
+    private void setupRecyclerView() {
+        if (movieAdapter == null) {
+            movieAdapter = new MovieAdapter();
+            movieAdapter.setOnItemClickListener(item -> {
+
+            });
+        }
+
+        binding.rvMovies.setAdapter(movieAdapter);
+        binding.rvMovies.addItemDecoration(new GridLayoutDecorator(
+                getResources().getDimension(R.dimen.grid_item_spacing)));
+        binding.rvMovies.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 }
