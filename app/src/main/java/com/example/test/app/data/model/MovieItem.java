@@ -3,26 +3,39 @@ package com.example.test.app.data.model;
 import com.example.test.app.utils.Objects;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * this class is for representing movie items without too many details
  */
+@Entity
 public class MovieItem {
     @SerializedName("Title")
+    @ColumnInfo(name = "title")
     private String title;
 
     @SerializedName("Year")
+    @ColumnInfo(name = "year")
     private String year;
 
     @SerializedName("imdbID")
+    @PrimaryKey
+    @NonNull
     private String imdbId;
 
     @SerializedName("Type")
+    @ColumnInfo(name = "type")
     private String type;
 
     @SerializedName("Poster")
+    @ColumnInfo(name = "poster")
     private String poster;
 
-    public MovieItem(String title, String year, String imdbId, String type, String poster) {
+    public MovieItem(String title, String year, @NonNull String imdbId, String type,
+                     String poster) {
         this.title = title;
         this.year = year;
         this.imdbId = imdbId;
@@ -46,11 +59,12 @@ public class MovieItem {
         this.year = year;
     }
 
+    @NonNull
     public String getImdbId() {
         return imdbId;
     }
 
-    public void setImdbId(String imdbId) {
+    public void setImdbId(@NonNull String imdbId) {
         this.imdbId = imdbId;
     }
 

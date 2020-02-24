@@ -4,7 +4,6 @@ import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.WorkerThread;
-import androidx.arch.core.executor.ArchTaskExecutor;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
@@ -18,12 +17,12 @@ import androidx.lifecycle.MediatorLiveData;
  * @param <RequestType>
  */
 public abstract class NetworkBoundResource<ResultType, RequestType> {
-    private final ArchTaskExecutor appExecutors;
+    private final AppExecutors appExecutors;
 
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
 
     @MainThread
-    public NetworkBoundResource(ArchTaskExecutor appExecutors) {
+    public NetworkBoundResource(AppExecutors appExecutors) {
         this.appExecutors = appExecutors;
         result.setValue(Resource.loading(null));
         LiveData<ResultType> dbSource = loadFromDb();
@@ -53,16 +52,16 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             result.removeSource(dbSource);
             //noinspection ConstantConditions
             if (response.isSuccessful()) {
-                appExecutors.executeOnDiskIO((() -> {
+                appExecutors.diskIO().execute(() -> {
                     saveCallResult(processResponse(response));
-                    appExecutors.postToMainThread(() ->
+                    appExecutors.mainThread().execute(() ->
                             // we specially request a new live data,
                             // otherwise we will get immediately last cached value,
                             // which may not be updated with latest results received from network.
                             result.addSource(loadFromDb(),
                                     newData -> setValue(Resource.success(newData)))
                     );
-                }));
+                });
             } else {
                 onFetchFailed();
                 result.addSource(dbSource,
