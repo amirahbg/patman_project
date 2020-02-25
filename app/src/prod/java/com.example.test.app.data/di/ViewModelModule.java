@@ -1,5 +1,7 @@
-package com.example.test.app.di;
+package com.example.test.app.data.di;
 
+import com.example.test.app.di.AppViewModelFactory;
+import com.example.test.app.di.ViewModelKey;
 import com.example.test.app.viewmodel.MovieDetailViewModel;
 import com.example.test.app.viewmodel.MoviesViewModel;
 

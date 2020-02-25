@@ -102,16 +102,19 @@ public class MoviesFragment extends Fragment {
             Snackbar.make(binding.clContainer, data.message, Snackbar.LENGTH_LONG).show();
 
         setData(data.data);
+        binding.executePendingBindings();
     }
 
     private void handleSuccess(Resource<List<MovieItem>> data) {
         binding.customLoading.hide();
         setData(data.data);
+        binding.executePendingBindings();
     }
 
     private void handleLoading(Resource<List<MovieItem>> data) {
         binding.customLoading.showLoading();
         setData(data.data);
+        binding.executePendingBindings();
     }
 
     private void setData(List<MovieItem> data) {

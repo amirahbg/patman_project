@@ -1,4 +1,4 @@
-package com.example.test.app.di;
+package com.example.test.app.data.di;
 
 import android.app.Application;
 

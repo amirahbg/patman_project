@@ -20,7 +20,7 @@ public class RateLimiter {
 
     @Inject
     public RateLimiter(@NonNull Application context) {
-        this(context, 1, TimeUnit.SECONDS);
+        this(context, 1, TimeUnit.HOURS);
     }
 
     public RateLimiter(Application context, int timeout, TimeUnit timeUnit) {
