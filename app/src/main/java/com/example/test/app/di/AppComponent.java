@@ -1,5 +1,6 @@
 package com.example.test.app.di;
 
+import com.example.test.app.view.fragment.MovieDetailFragment;
 import com.example.test.app.view.fragment.MoviesFragment;
 
 import javax.inject.Singleton;
@@ -15,4 +16,6 @@ import dagger.Component;
 })
 public interface AppComponent {
     void inject(MoviesFragment moviesFragment);
+
+    void inject(MovieDetailFragment movieDetailFragment);
 }

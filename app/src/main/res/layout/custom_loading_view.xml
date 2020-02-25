@@ -3,7 +3,8 @@
     android:id="@+id/flContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/circle_background">
+    android:background="@drawable/circle_background"
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/ivRetry"

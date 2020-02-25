@@ -1,5 +1,6 @@
 package com.example.test.app.di;
 
+import com.example.test.app.viewmodel.MovieDetailViewModel;
 import com.example.test.app.viewmodel.MoviesViewModel;
 
 import androidx.lifecycle.ViewModel;
@@ -13,7 +14,12 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(MoviesViewModel.class)
-    abstract ViewModel bindVideoViewModel(MoviesViewModel moviesViewModel);
+    abstract ViewModel bindMoviesViewModel(MoviesViewModel moviesViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MovieDetailViewModel.class)
+    abstract ViewModel bindMovieDetailViewModel(MovieDetailViewModel movieDetailViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(AppViewModelFactory factory);

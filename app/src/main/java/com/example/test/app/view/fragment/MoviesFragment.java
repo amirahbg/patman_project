@@ -125,6 +125,9 @@ public class MoviesFragment extends Fragment {
             movieAdapter = new MovieAdapter();
             movieAdapter.setOnItemClickListener(item -> {
 
+                MoviesFragmentDirections.ActionMoviesFragmentToMovieDetailFragment action =
+                        MoviesFragmentDirections.actionMoviesFragmentToMovieDetailFragment(item.getImdbId());
+                Navigation.findNavController(binding.clContainer).navigate(action);
             });
         }
 

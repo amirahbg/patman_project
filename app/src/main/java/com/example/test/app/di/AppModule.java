@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.example.test.app.data.LocalDatabase;
 import com.example.test.app.data.api.ImdbService;
+import com.example.test.app.data.datasource.moviedetail.DefaultMovieDetailRepo;
+import com.example.test.app.data.datasource.moviedetail.MovieDetailDao;
+import com.example.test.app.data.datasource.moviedetail.MovieDetailRepo;
 import com.example.test.app.data.datasource.movieitem.DefaultMovieItemRepo;
 import com.example.test.app.data.datasource.movieitem.MovieItemDao;
 import com.example.test.app.data.datasource.movieitem.MovieItemRepo;
@@ -47,5 +50,14 @@ public abstract class AppModule {
                 .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                 .build()
                 .create(ImdbService.class);
+    }
+
+    @Singleton
+    @Binds
+    public abstract MovieDetailRepo bindMovieDetailRepo(DefaultMovieDetailRepo movieDetailRepo);
+
+    @Provides
+    public static MovieDetailDao provideMovieDetailDao(LocalDatabase localDatabase) {
+        return localDatabase.getMovieDetailDao();
     }
 }
