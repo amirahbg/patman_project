@@ -27,7 +27,7 @@ public class MockMovieItemRepo implements MovieItemRepo {
 
     private void populateData() {
         sMovieItems = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 30; i++) {
             sMovieItems.add(new MovieItem("title " + i,
                     "year " + i, String.valueOf(i + 10), "movie",
                     "poster " + i));
