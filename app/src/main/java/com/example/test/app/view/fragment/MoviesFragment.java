@@ -26,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 
@@ -86,6 +86,8 @@ public class MoviesFragment extends Fragment {
                         handleError(moviesItem);
                 }
             });
+
+            binding.customLoading.setOnRetryClicked(v -> moviesViewModel.retry());
         }
 
         return binding.getRoot();
