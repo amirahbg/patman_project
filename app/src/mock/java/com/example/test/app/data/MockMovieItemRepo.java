@@ -7,16 +7,20 @@ import com.example.test.app.utils.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-
+@Singleton
 public class MockMovieItemRepo implements MovieItemRepo {
     public static final String FAKE_ERROR = "fake error";
     private MutableLiveData<Resource<List<MovieItem>>> movieItems;
     private static List<MovieItem> sMovieItems;
     private boolean hasError = false;
 
+    @Inject
     public MockMovieItemRepo() {
         populateData();
     }

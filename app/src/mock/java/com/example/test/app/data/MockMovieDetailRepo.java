@@ -5,15 +5,20 @@ import com.example.test.app.data.model.MovieDetail;
 import com.example.test.app.data.testutils.Faker;
 import com.example.test.app.utils.Resource;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+@Singleton
 public class MockMovieDetailRepo implements MovieDetailRepo {
     public static final String FAKE_ERROR = "fake error";
     private MutableLiveData<Resource<MovieDetail>> movieDetail;
     private static MovieDetail sMovieDetail;
     private boolean hasError = false;
 
+    @Inject
     public MockMovieDetailRepo() {
         populateData();
     }

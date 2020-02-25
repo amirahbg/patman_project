@@ -1,5 +1,7 @@
 package com.example.test.app.di;
 
+import com.example.test.app.data.di.AppModule;
+import com.example.test.app.data.di.ViewModelModule;
 import com.example.test.app.view.fragment.MovieDetailFragment;
 import com.example.test.app.view.fragment.MoviesFragment;
 
