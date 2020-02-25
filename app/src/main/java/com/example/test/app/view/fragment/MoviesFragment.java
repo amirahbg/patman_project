@@ -134,6 +134,6 @@ public class MoviesFragment extends Fragment {
         binding.rvMovies.setAdapter(movieAdapter);
         binding.rvMovies.addItemDecoration(new GridLayoutDecorator(
                 getResources().getDimension(R.dimen.grid_item_spacing)));
-        binding.rvMovies.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.rvMovies.setLayoutManager(new GridLayoutManager(getContext(), 3));
     }
 }
